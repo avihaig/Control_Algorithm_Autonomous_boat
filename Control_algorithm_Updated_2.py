@@ -103,33 +103,33 @@ import serial
         if self.angle <= -0.5:
             self.move(self.bow_thruster, 50)
 
-        # right\left "weak" (less than 0.1?)
-        if self.angle >= 0.1:
+        # right\left "weak" (less than 0.1?) #How much is minimum (threshold?)
+        if 0<self.angle <= 0.1:
             self.move(self.bow_thruster, 110)
-        if self.angle <= 0.1:
+        if -0.1<=self.angle<0:
             self.move(self.bow_thruster, 70)
 
 
         # backward "strong" (more than 5?)
         if self.x<= -5:
             self.move(self.right_servo, 90)
-        self.move(self.left_servo, 90)
-        self.move(self.right_thruster, 0)
-        self.move(self.left_thruster, 0)
+            self.move(self.left_servo, 90)
+            self.move(self.right_thruster, 0)
+            self.move(self.left_thruster, 0)
 
         # backward "medium" (more than 5?)
         if -5< self.x <-3:
             self.move(self.right_servo, 90)
-        self.move(self.left_servo, 90)
-        self.move(self.right_thruster, 50)
-        self.move(self.left_thruster, 50)
+            self.move(self.left_servo, 90)
+            self.move(self.right_thruster, 50)
+            self.move(self.left_thruster, 50)
 
         # backward "weak" (less than 3?)
         if -3< self.x <=0:
             self.move(self.right_servo, 90)
-        self.move(self.left_servo, 90)
-        self.move(self.right_thruster, 70)
-        self.move(self.left_thruster, 70)
+            self.move(self.left_servo, 90)
+            self.move(self.right_thruster, 70)
+            self.move(self.left_thruster, 70)
 
 
 
