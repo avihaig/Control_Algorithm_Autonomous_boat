@@ -69,67 +69,65 @@ import serial
 
 
     def Situation(self):
-        # forward "strong" (more than 5?)
-        if self.x>=5:
-            self.move(self.right_servo, 90)
-            self.move(self.left_servo, 90)
-            self.move(self.right_thruster, 180)
+        # Low values
+        if abs(self.dist) <= 0.1:
+            self.move(self.right_thruster, 90)  # Stop propeller=90
+            self.move(self.left_thruster, 90)
+
+        # Forward "weak" (less than 3)
+        if 0.1<self.dist<=3 and -90<=self.angle<=90:
+            self.move(self.right_thruster, (90+self.dist*30)) #Setting value to be between 90 to 180
+            self.move(self.left_thruster, (90+self.dist*30))
+
+        # Forward "strong" (more than 3)
+        if self.dist > 3:
+            self.move(self.right_thruster, 180) #Maximum power forward=180
             self.move(self.left_thruster, 180)
 
-        # forward "medium" (more than 5?)
-        if 3<self.x<5:
-            self.move(self.right_servo, 90)
-            self.move(self.left_servo, 90)
-            self.move(self.right_thruster, 130)
-            self.move(self.left_thruster, 130)
+        ################# Need to check directions!
+        # Angle "weak" right (0 to 90)
+        if 0<=self.angle<=90:
+            self.move(self.right_servo, (90+self.angle)) #Setting value to be between 90 to 180
+            self.move(self.left_servo, (90+self.angle))
 
-        # forward "weak" (less than 3?)
-        if 0 < self.x <= 3:
-            self.move(self.right_servo, 90)
-            self.move(self.left_servo, 90)
-            self.move(self.right_thruster, 110)
-            self.move(self.left_thruster, 110)
+        # Angle "weak" left (-90 to 0)
+        if -90 <= self.angle < 0:
+            self.move(self.right_servo, -self.angle)  # Setting value to be between 0 to 90
+            self.move(self.left_servo, -self.angle)
 
+        # Angle "strong" right (90 and above)
+        if self.angle > 90:
+            self.move(self.right_thruster, 90)  #Stop propeller=90
+            self.move(self.left_thruster, 90)
+            self.move(self.right_servo, 180) #Maximum right=180
+            self.move(self.left_servo, 180)
+            self.move(self.bow_thruster, 120 #1/3 power
+            self.move(self.right_thruster, 105) #1/6 power
+            self.move(self.left_thruster, 105) # 1/6 power
 
-        # right\left "strong" (more than 0.5?)
-        if self.angle >= 0.5
-            self.move(self.bow_thruster, 180)
-        if self.angle <= -0.5:
-            self.move(self.bow_thruster, 0
+        # Angle "strong" left (-90 and below)
+        if self.angle < -90:
+            self.move(self.right_thruster, 90)  # Stop propeller=90
+            self.move(self.left_thruster, 90)
+            self.move(self.right_servo, 0)  # Maximum left=0
+            self.move(self.left_servo, 0)
+            self.move(self.bow_thruster, 60  # 1/3 power
+            self.move(self.right_thruster, 105)  # 1/6 power
+            self.move(self.left_thruster, 105)  # 1/6 power
 
-        # right\left "medium" (less than 0.5?)
-        if 0.2<self.angle <= 0.5:
-            self.move(self.bow_thruster, 130)
-        if self.angle <= -0.5:
-            self.move(self.bow_thruster, 50)
+        # Backward "weak" (less than 3)
+        if 0.1 < self.dist <= 3 and abs(self.angle)>90:
+            if 0 < self.angle:
+                self.move(self.right_servo, (90 + self.angle))  # Setting value to be between 90 to 180
+                self.move(self.left_servo, (90 + self.angle))
 
-        # right\left "weak" (less than 0.1?) #How much is minimum (threshold?)
-        if 0<self.angle <= 0.1:
-            self.move(self.bow_thruster, 110)
-        if -0.1<=self.angle<0:
-            self.move(self.bow_thruster, 70)
+            # Angle "weak" left (-90 to 0)
+            if self.angle < 0:
+                self.move(self.right_servo, -self.angle)  # Setting value to be between 0 to 90
+                self.move(self.left_servo, -self.angle)
 
-
-        # backward "strong" (more than 5?)
-        if self.x<= -5:
-            self.move(self.right_servo, 90)
-            self.move(self.left_servo, 90)
-            self.move(self.right_thruster, 0)
-            self.move(self.left_thruster, 0)
-
-        # backward "medium" (more than 5?)
-        if -5< self.x <-3:
-            self.move(self.right_servo, 90)
-            self.move(self.left_servo, 90)
-            self.move(self.right_thruster, 50)
-            self.move(self.left_thruster, 50)
-
-        # backward "weak" (less than 3?)
-        if -3< self.x <=0:
-            self.move(self.right_servo, 90)
-            self.move(self.left_servo, 90)
-            self.move(self.right_thruster, 70)
-            self.move(self.left_thruster, 70)
+                self.move(self.right_thruster, (90 + self.dist * 30))  # Setting value to be between 90 to 180
+                self.move(self.left_thruster, (90 + self.dist * 30))
 
 
 
