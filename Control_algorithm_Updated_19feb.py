@@ -39,12 +39,14 @@ import serial
         self.x = float(cmd_data.linear.x)
         self.y = float(cmd_data.linear.y)
         self.z = float(cmd_data.angular.z
-        if self.x > 0.5:
-            self.angle = math.atan(self.y/self.x)
-        if self.x < 0.5:
-            self.angle = math.pi - math.atan(self.y/self.x)
-        if abs(self.x) <= 0.5: #problam if the boat is on desirable point!
-            self.angle = 0
+        if self.x < 0 and self.y > 0:
+            angle = 180 + math.degrees(math.atan(self.y, self.x))
+        elif self.x < 0 and self.y < 0:
+            angle = 180 + math.degrees(math.atan(self.y, self.x))
+        elif self.x > 0 and self.y < 0:
+            angle = 360 + math.degrees(math.atan(self.y, self.x))
+        else:
+            angle = math.degrees(math.atan(self.y, self.x))
 
 
     def move(self, motor, angle):
