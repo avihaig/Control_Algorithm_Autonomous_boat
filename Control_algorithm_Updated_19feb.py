@@ -77,7 +77,7 @@ import serial
             self.move(self.left_thruster, 90)
 
         # Forward "weak" (less than 3)
-        if 0.1<self.dist<=3 and -90<=self.angle<=90:
+        if 0.1<abs(self.dist)<=3 and -90<=self.angle<=90:
             self.move(self.right_thruster, (90+self.dist*30)) #Setting value to be between 90 to 180
             self.move(self.left_thruster, (90+self.dist*30))
 
