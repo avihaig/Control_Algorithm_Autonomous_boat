@@ -27,7 +27,6 @@ import serial
         self.left_servo = "left_servo"
         self.x = 0
         self.y = 0
-        self.z = 0
         self.angle = 0
 
 
@@ -36,9 +35,9 @@ import serial
 
    
     def cmd_callback(self, cmd_data):
-        self.x = float(cmd_data.linear.x) #Do we need "float"?
-        self.y = float(cmd_data.linear.y)
-        self.angle = float(cmd_data.angular.z)
+        self.x = cmd_data.linear.x
+        self.y = cmd_data.linear.y
+        self.angle = cmd_data.angular.z
         self.dist = sqrt((self.x)^2 + (self.y)^2)
 
 
