@@ -63,20 +63,35 @@ import serial
 
 
 
-    def Situation(self):
+        def Situation(self):
+        self.move(self.bow_thruster, 90)    # Stop propeller=90
+
+
         # Low values
-        if abs(self.dist) <= 0.1:
+        if abs(self.dist) <= 0.1 and abs(self.angle) <= 0.2:
             self.move(self.right_thruster, 90)  # Stop propeller=90
             self.move(self.left_thruster, 90)
+        if abs(self.dist) <= 0.1 and abs(self.angle) > 0.2:
+            if 0 < self.angle:
+                self.move(self.right_servo, 180)
+                self.move(self.left_servo, 180)
+                self.move(self.right_thruster, 100)
+                self.move(self.left_thruster, 100)
+            if self.angle < 0:
+                self.move(self.right_servo, 0)
+                self.move(self.left_servo, 0)
+                self.move(self.right_thruster, 100)
+                self.move(self.left_thruster, 100)
+
 
         # "weak" (less than 3)
-        if 0.1<self.dist<=3:
+        if 0.1<self.dist<=6:
             if -90 <= self.angle <= 90: # Forward
                 self.move(self.right_servo, (90 + self.angle))  # Setting value to be between 90 to 180
                 self.move(self.left_servo, (90 + self.angle))
-                self.move(self.right_thruster, (90+self.dist*30)) #Setting value to be between 90 to 180
-                self.move(self.left_thruster, (90+self.dist*30))
-            if abs(self.angle) > 90: # Backward
+                self.move(self.right_thruster, (90+self.dist*15))   #Setting value to be between 90 to 180
+                self.move(self.left_thruster, (90+self.dist*15))
+            if abs(self.angle) > 90:    # Backward
                 if 0 < self.angle:
                     self.move(self.right_servo, (180-self.angle))
                     self.move(self.left_servo, (180-self.angle))
@@ -89,23 +104,23 @@ import serial
                     self.move(self.left_thruster, 130)
 
         # "strong" (more than 3)
-        if self.dist > 3:
-            if -90 <= self.angle <= 90:  # Forward
+        if self.dist > 6:
+            if -90 <= self.angle <= 90: # Forward
                 self.move(self.right_servo, (90 + self.angle))  # Setting value to be between 90 to 180
                 self.move(self.left_servo, (90 + self.angle))
                 self.move(self.right_thruster, 180) #Maximum power forward=180
                 self.move(self.left_thruster, 180)
-            if abs(self.angle) > 90: # Backward
+            if abs(self.angle) > 90:    # Backward
                 if 0 < self.angle:
                     self.move(self.right_servo, (180))
                     self.move(self.left_servo, (180))
-                    self.move(self.right_thruster, 180)  # Maximum power forward=180
-                    self.move(self.left_thruster, 180)
+                    self.move(self.right_thruster, 130)
+                    self.move(self.left_thruster, 130)
                 if self.angle < 0:
                     self.move(self.right_servo, (0))
                     self.move(self.left_servo, (0))
-                    self.move(self.right_thruster, 180)  # Maximum power forward=180
-                    self.move(self.left_thruster, 180)
+                    self.move(self.right_thruster, 130)
+                    self.move(self.left_thruster, 130)
 
 
 
