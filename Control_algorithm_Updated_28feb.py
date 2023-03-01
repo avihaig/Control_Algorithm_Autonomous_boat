@@ -94,13 +94,13 @@ import serial
                 if 0 < self.angle:
                     self.move(self.right_servo, (180-self.angle))
                     self.move(self.left_servo, (180-self.angle))
-                    self.move(self.right_thruster, 50)
-                    self.move(self.left_thruster, 50)
+                    self.move(self.right_thruster, (90-self.dist*15))
+                    self.move(self.left_thruster, (90-self.dist*15))
                 if self.angle < 0:
                     self.move(self.right_servo, (-180+self.angle))
                     self.move(self.left_servo, (-180+self.angle))
-                    self.move(self.right_thruster, 50)
-                    self.move(self.left_thruster, 50)
+                    self.move(self.right_thruster, (90-self.dist*15))
+                    self.move(self.left_thruster, (90-self.dist*15))
 
         # "strong" (more than 6)
         if 6 < self.dist:
