@@ -28,6 +28,7 @@ import serial
         self.x = 0
         self.y = 0
         self.angle = 0
+        self.dist = 0
 
 
         while not rospy.is_shutdown():
